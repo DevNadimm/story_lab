@@ -25,25 +25,25 @@ class Validators {
   /// Validates a password to ensure it meets security requirements:
   static String? validatePassword(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Password is required';
+      return 'Password is required.';
     }
 
     final password = value.trim();
 
     if (!RegExp(r'[A-Z]').hasMatch(password)) {
-      return 'Password must contain at least one uppercase letter';
+      return 'Add at least 1 uppercase letter (A-Z).';
     }
 
     if (!RegExp(r'[a-z]').hasMatch(password)) {
-      return 'Password must contain at least one lowercase letter';
+      return 'Add at least 1 lowercase letter (a-z).';
     }
 
     if (!RegExp(r'[!@#\$&*~%^()\-_=+{}[\]|;:"<>,.?/]').hasMatch(password)) {
-      return 'Password must contain at least one special character';
+      return 'Add 1 special char (!@#\$% etc).';
     }
 
     if (password.length < 8) {
-      return 'Password must be at least 8 characters long';
+      return 'Minimum 8 characters.';
     }
 
     return null;
