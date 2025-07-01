@@ -26,7 +26,7 @@ class AuthFooterText extends StatelessWidget {
           onTap: onTap,
           child: Text(
             actionText,
-            style: Theme.of(context).textTheme.labelLarge!.copyWith(color: AppColors.primary),
+            style: Theme.of(context).textTheme.labelLarge!.copyWith(color: AppColors.accent),
           ),
         ),
       ],

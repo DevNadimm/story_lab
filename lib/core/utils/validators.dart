@@ -30,10 +30,6 @@ class Validators {
 
     final password = value.trim();
 
-    if (password.length < 6) {
-      return 'Password must be at least 6 characters long';
-    }
-
     if (!RegExp(r'[A-Z]').hasMatch(password)) {
       return 'Password must contain at least one uppercase letter';
     }
@@ -44,6 +40,10 @@ class Validators {
 
     if (!RegExp(r'[!@#\$&*~%^()\-_=+{}[\]|;:"<>,.?/]').hasMatch(password)) {
       return 'Password must contain at least one special character';
+    }
+
+    if (password.length < 8) {
+      return 'Password must be at least 8 characters long';
     }
 
     return null;

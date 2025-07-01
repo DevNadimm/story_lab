@@ -5,6 +5,7 @@ import 'package:story_lab/features/auth/presentation/pages/sign_up_page.dart';
 import 'package:story_lab/features/auth/presentation/widgets/auth_footer_text.dart';
 
 class SignInPage extends StatefulWidget {
+  static route() => MaterialPageRoute(builder: (_) => const SignInPage());
   const SignInPage({super.key});
 
   @override
@@ -45,6 +46,8 @@ class _SignInPageState extends State<SignInPage> {
                 decoration: const InputDecoration(
                   hintText: "Password",
                 ),
+                obscureText: true,
+                obscuringCharacter: '*',
                 validator: Validators.validatePassword,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
@@ -58,7 +61,7 @@ class _SignInPageState extends State<SignInPage> {
                 leadingText: 'Don\'t have an account? ',
                 actionText: 'Sign Up',
                 onTap: () {
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const SignUpPage()));
+                  Navigator.pushReplacement(context, SignUpPage.route());
                 },
               )
             ],
