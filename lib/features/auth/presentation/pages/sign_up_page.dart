@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:story_lab/core/utils/validators.dart';
 import 'package:story_lab/core/widgets/custom_elevated_button.dart';
-import 'package:story_lab/features/auth/presentation/pages/sign_up_page.dart';
+import 'package:story_lab/features/auth/presentation/pages/sign_in_page.dart';
 import 'package:story_lab/features/auth/presentation/widgets/auth_footer_text.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignUpPageState extends State<SignUpPage> {
   final _globalKey = GlobalKey<FormState>();
+  final _fullNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -28,10 +29,18 @@ class _SignInPageState extends State<SignInPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Sign In.",
+                "Sign Up.",
                 style: Theme.of(context).textTheme.displayLarge,
               ),
               const SizedBox(height: 24),
+              TextFormField(
+                controller: _fullNameController,
+                decoration: const InputDecoration(
+                  hintText: "Full Name",
+                ),
+                validator: (value) => Validators.validateRequired(value, fieldName: "Full name"),
+              ),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: _emailController,
                 decoration: const InputDecoration(
@@ -51,14 +60,14 @@ class _SignInPageState extends State<SignInPage> {
               const SizedBox(height: 24),
               CustomElevatedButton(
                 onPressed: _submitButton,
-                label: "Sign In",
+                label: "Sign Up",
               ),
               const SizedBox(height: 16),
               AuthFooterText(
-                leadingText: 'Don\'t have an account? ',
-                actionText: 'Sign Up',
+                leadingText: 'Already have an account? ',
+                actionText: 'Sign In',
                 onTap: () {
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const SignUpPage()));
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const SignInPage()));
                 },
               )
             ],
@@ -74,6 +83,7 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   void dispose() {
+    _fullNameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
