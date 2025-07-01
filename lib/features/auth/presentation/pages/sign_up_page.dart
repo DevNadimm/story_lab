@@ -36,6 +36,8 @@ class _SignUpPageState extends State<SignUpPage> {
               const SizedBox(height: 24),
               TextFormField(
                 controller: _fullNameController,
+                keyboardType: TextInputType.name,
+                textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(
                   hintText: "Full Name",
                 ),
@@ -44,6 +46,8 @@ class _SignUpPageState extends State<SignUpPage> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(
                   hintText: "Email",
                 ),
@@ -52,13 +56,14 @@ class _SignUpPageState extends State<SignUpPage> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _passwordController,
+                keyboardType: TextInputType.visiblePassword,
+                obscureText: true,
+                obscuringCharacter: '*',
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 decoration: const InputDecoration(
                   hintText: "Password",
                 ),
-                obscureText: true,
-                obscuringCharacter: '*',
                 validator: Validators.validatePassword,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
               const SizedBox(height: 24),
               CustomElevatedButton(

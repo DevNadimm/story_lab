@@ -35,6 +35,8 @@ class _SignInPageState extends State<SignInPage> {
               const SizedBox(height: 24),
               TextFormField(
                 controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(
                   hintText: "Email",
                 ),
@@ -43,6 +45,7 @@ class _SignInPageState extends State<SignInPage> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _passwordController,
+                keyboardType: TextInputType.visiblePassword,
                 decoration: const InputDecoration(
                   hintText: "Password",
                 ),
