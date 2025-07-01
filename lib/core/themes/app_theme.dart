@@ -139,7 +139,7 @@ class AppTheme {
         onSecondary: AppColors.textPrimary,
         onSurface: AppColors.textPrimary,
         onError: Colors.white,
-      ).copyWith(surface: AppColors.background).copyWith(error: AppColors.error),
+      ),
     );
   }
 }
