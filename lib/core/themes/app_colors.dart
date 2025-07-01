@@ -28,5 +28,9 @@ class AppColors {
 
   static const Color info = Color(0xFF2196F3);
 
+  static const Color black = Colors.black;
+
+  static const Color white = Colors.white;
+
   static const Color transparent = Colors.transparent;
 }

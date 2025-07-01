@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:story_lab/core/themes/app_colors.dart';
 
 class LoadingIndicator extends StatelessWidget {
   final double size;
@@ -18,7 +18,7 @@ class LoadingIndicator extends StatelessWidget {
         height: size,
         width: size,
         child: CupertinoActivityIndicator(
-          color: color ?? Theme.of(context).primaryColor,
+          color: color ?? AppColors.white,
           radius: size / 2.5,
         ),
       ),
