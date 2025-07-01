@@ -42,8 +42,8 @@ class Validators {
       return 'Add 1 special char (!@#\$% etc).';
     }
 
-    if (password.length < 8) {
-      return 'Minimum 8 characters.';
+    if (password.length < 6) {
+      return 'Minimum 6 characters.';
     }
 
     return null;
