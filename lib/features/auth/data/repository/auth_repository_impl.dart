@@ -33,6 +33,7 @@ class AuthRepositoryImpl implements AuthRepository {
       
       return right(uid);
     } on ServerException catch (e) {
+      print("[❌ ERROR] ${e.message.toString()}");
       return left(Failure(message: e.message));
     }
   }
