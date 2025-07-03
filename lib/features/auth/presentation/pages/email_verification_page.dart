@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:story_lab/core/themes/app_colors.dart';
@@ -9,7 +10,7 @@ class EmailVerificationPage extends StatelessWidget {
   const EmailVerificationPage({super.key, required this.email});
 
   static Route route({required String email}) {
-    return MaterialPageRoute(
+    return CupertinoPageRoute(
       builder: (_) => EmailVerificationPage(email: email),
     );
   }
