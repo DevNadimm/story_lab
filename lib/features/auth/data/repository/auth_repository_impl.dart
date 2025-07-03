@@ -60,20 +60,20 @@ class AuthRepositoryImpl implements AuthRepository {
       return right(isVerified);
     } on ServerException catch (e) {
       final message = extractErrorMessage(e.message);
-      debugPrint("[❌ ERROR] $message");
-      return left(Failure(message: 'Failed to check verification.'));
+      debugPrint("[❌ ERROR] $e");
+      return left(Failure(message: message));
     }
   }
 
   @override
-  Future<Either<Failure, void>> resendEmailVerification() async {
+  Future<Either<Failure, void>> resendEmailVerification({required String email}) async {
     try {
-      await authRemoteDatasource.resendEmailVerification();
+      await authRemoteDatasource.resendEmailVerification(email: email);
       return right(null);
     } on ServerException catch (e) {
       final message = extractErrorMessage(e.message);
-      debugPrint("[❌ ERROR] $message");
-      return left(Failure(message: 'Failed to resend verification.'));
+      debugPrint("[❌ ERROR] $e");
+      return left(Failure(message: message));
     }
   }
 }

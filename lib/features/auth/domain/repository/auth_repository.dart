@@ -16,4 +16,10 @@ abstract interface class AuthRepository {
   Future<Either<Failure, bool>> isUsernameTaken({
     required String username,
   });
+
+  Future<Either<Failure, bool>> isEmailVerified();
+
+  Future<Either<Failure, void>> resendEmailVerification({
+    required String email,
+  });
 }

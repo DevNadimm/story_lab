@@ -16,6 +16,12 @@ abstract interface class AuthRemoteDatasource {
   Future<bool> isUsernameTaken({
     required String username,
   });
+
+  Future<bool> isEmailVerified();
+
+  Future<void> resendEmailVerification({
+    required String email,
+  });
 }
 
 class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
@@ -86,6 +92,33 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
           .maybeSingle();
 
       return response != null;
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<bool> isEmailVerified() async {
+    try {
+      final user = supabaseClient.auth.currentUser;
+      if (user == null) {
+        throw ServerException('No authenticated session. Please sign in again.');
+      }
+
+      final response = await supabaseClient.auth.getUser();
+      return response.user?.emailConfirmedAt != null;
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> resendEmailVerification({required String email}) async {
+    try {
+      await supabaseClient.auth.resend(
+        type: OtpType.signup,
+        email: email,
+      );
     } catch (e) {
       throw ServerException(e.toString());
     }

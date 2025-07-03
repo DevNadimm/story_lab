@@ -22,3 +22,11 @@ final class AuthFailure extends AuthState {
 class UsernameAvailable extends AuthState {}
 
 class UsernameTaken extends AuthState {}
+
+class EmailVerificationChecking extends AuthState {}
+
+class EmailVerified extends AuthState {}
+
+class EmailNotVerified extends AuthState {}
+
+class EmailVerificationResent extends AuthState {}
