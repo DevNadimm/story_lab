@@ -54,7 +54,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
             if (state is AuthSuccess) {
               final email = _emailController.text.trim();
-              MessageUtils.showSnackBar(context, "📬 Email sent to $email. Please verify.", type: MessageType.success);
+              MessageUtils.showSnackBar(context, "📬 Email sent to $email. Please verify.", type: MessageType.info);
               await Future.delayed(const Duration(seconds: 2));
               Navigator.pushReplacement(context, SignInPage.route(email: email));
             }
