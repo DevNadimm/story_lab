@@ -77,117 +77,115 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Widget _buildSignUpContent() {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Form(
-          key: _globalKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Text(
-                  "Sign Up.",
-                  style: Theme.of(context).textTheme.displayLarge,
-                ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Form(
+        key: _globalKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Text(
+                "Sign Up.",
+                style: Theme.of(context).textTheme.displayLarge,
               ),
-              const SizedBox(height: 24),
-              TextFormField(
-                controller: _fullNameController,
-                keyboardType: TextInputType.name,
-                textInputAction: TextInputAction.next,
-                textCapitalization: TextCapitalization.words,
-                decoration: const InputDecoration(
-                  hintText: "Full Name",
-                  prefixIcon: Icon(HugeIcons.strokeRoundedUser03, color: AppColors.textSecondary, size: 22),
-                ),
-                validator: (value) => Validators.validateRequired(value, fieldName: "Full name"),
+            ),
+            const SizedBox(height: 24),
+            TextFormField(
+              controller: _fullNameController,
+              keyboardType: TextInputType.name,
+              textInputAction: TextInputAction.next,
+              textCapitalization: TextCapitalization.words,
+              decoration: const InputDecoration(
+                hintText: "Full Name",
+                prefixIcon: Icon(HugeIcons.strokeRoundedUser03, color: AppColors.textSecondary, size: 22),
               ),
-              //  const SizedBox(height: 16),
-              //   TextFormField(
-              //     controller: _usernameController,
-              //     keyboardType: TextInputType.text,
-              //     textInputAction: TextInputAction.next,
-              //     decoration: const InputDecoration(
-              //       hintText: "Username",
-              //     ),
-              //     onChanged: (value) {
-              //       if (_debounce?.isActive ?? false) _debounce!.cancel();
-              //
-              //       _debounce = Timer(const Duration(milliseconds: 500), () {
-              //         if (value.isNotEmpty) {
-              //           context.read<AuthBloc>().add(CheckUsernameEvent(value));
-              //         }
-              //       });
-              //     },
-              //     validator: (value) => Validators.validateRequired(value, fieldName: "Username"),
-              //   ),
-              // if (_message != null)
-              //     Padding(
-              //       padding: const EdgeInsets.only(top: 4),
-              //       child: Row(
-              //         children: [
-              //           Icon(_icon, size: 16, color: Colors.grey),
-              //           const SizedBox(width: 4),
-              //           Text(
-              //             textAlign: TextAlign.start,
-              //             _message!,
-              //             style: const TextStyle(
-              //               color: Colors.grey,
-              //               fontSize: 12,
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  hintText: "Email",
-                  prefixIcon: Icon(HugeIcons.strokeRoundedMail01, color: AppColors.textSecondary, size: 22),
-                ),
-                validator: Validators.validateEmail,
+              validator: (value) => Validators.validateRequired(value, fieldName: "Full name"),
+            ),
+            //  const SizedBox(height: 16),
+            //   TextFormField(
+            //     controller: _usernameController,
+            //     keyboardType: TextInputType.text,
+            //     textInputAction: TextInputAction.next,
+            //     decoration: const InputDecoration(
+            //       hintText: "Username",
+            //     ),
+            //     onChanged: (value) {
+            //       if (_debounce?.isActive ?? false) _debounce!.cancel();
+            //
+            //       _debounce = Timer(const Duration(milliseconds: 500), () {
+            //         if (value.isNotEmpty) {
+            //           context.read<AuthBloc>().add(CheckUsernameEvent(value));
+            //         }
+            //       });
+            //     },
+            //     validator: (value) => Validators.validateRequired(value, fieldName: "Username"),
+            //   ),
+            // if (_message != null)
+            //     Padding(
+            //       padding: const EdgeInsets.only(top: 4),
+            //       child: Row(
+            //         children: [
+            //           Icon(_icon, size: 16, color: Colors.grey),
+            //           const SizedBox(width: 4),
+            //           Text(
+            //             textAlign: TextAlign.start,
+            //             _message!,
+            //             style: const TextStyle(
+            //               color: Colors.grey,
+            //               fontSize: 12,
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: _emailController,
+              keyboardType: TextInputType.emailAddress,
+              textInputAction: TextInputAction.next,
+              decoration: const InputDecoration(
+                hintText: "Email",
+                prefixIcon: Icon(HugeIcons.strokeRoundedMail01, color: AppColors.textSecondary, size: 22),
               ),
-              const SizedBox(height: 16),
-              BlocBuilder<PasswordVisibilityCubit, bool>(
-                builder: (context, isVisible) {
-                  return TextFormField(
-                    controller: _passwordController,
-                    keyboardType: TextInputType.visiblePassword,
-                    decoration: InputDecoration(
-                      hintText: "Password",
-                      prefixIcon: const Icon(HugeIcons.strokeRoundedSquareLockPassword, color: AppColors.textSecondary, size: 22,),
-                      suffixIcon: IconButton(
-                        onPressed: () => context.read<PasswordVisibilityCubit>().toggleVisibility(),
-                        icon: Icon(isVisible ? Icons.visibility_off : Icons.visibility, color: AppColors.textSecondary, size: 22,),
-                      ),
+              validator: Validators.validateEmail,
+            ),
+            const SizedBox(height: 16),
+            BlocBuilder<PasswordVisibilityCubit, bool>(
+              builder: (context, isVisible) {
+                return TextFormField(
+                  controller: _passwordController,
+                  keyboardType: TextInputType.visiblePassword,
+                  decoration: InputDecoration(
+                    hintText: "Password",
+                    prefixIcon: const Icon(HugeIcons.strokeRoundedSquareLockPassword, color: AppColors.textSecondary, size: 22,),
+                    suffixIcon: IconButton(
+                      onPressed: () => context.read<PasswordVisibilityCubit>().toggleVisibility(),
+                      icon: Icon(isVisible ? Icons.visibility_off : Icons.visibility, color: AppColors.textSecondary, size: 22,),
                     ),
-                    obscureText: !isVisible,
-                    obscuringCharacter: '*',
-                    validator: Validators.validatePassword,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                  );
-                },
-              ),
-              const SizedBox(height: 24),
-              CustomElevatedButton(
-                onPressed: _submitButton,
-                label: "Sign Up",
-              ),
-              const SizedBox(height: 16),
-              AuthFooterText(
-                leadingText: 'Already have an account? ',
-                actionText: 'Sign In',
-                onTap: () {
-                  Navigator.pushReplacement(context, SignInPage.route());
-                },
-              )
-            ],
-          ),
+                  ),
+                  obscureText: !isVisible,
+                  obscuringCharacter: '*',
+                  validator: Validators.validatePassword,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                );
+              },
+            ),
+            const SizedBox(height: 24),
+            CustomElevatedButton(
+              onPressed: _submitButton,
+              label: "Sign Up",
+            ),
+            const SizedBox(height: 16),
+            AuthFooterText(
+              leadingText: 'Already have an account? ',
+              actionText: 'Sign In',
+              onTap: () {
+                Navigator.pushReplacement(context, SignInPage.route());
+              },
+            )
+          ],
         ),
       ),
     );
