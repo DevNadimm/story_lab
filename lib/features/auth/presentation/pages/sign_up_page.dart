@@ -23,6 +23,10 @@ class _SignUpPageState extends State<SignUpPage> {
   final _fullNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  // final _usernameController = TextEditingController();
+  // String? _message;
+  // IconData? _icon;
+  // Timer? _debounce;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +36,16 @@ class _SignUpPageState extends State<SignUpPage> {
           if (state is AuthFailure) {
             MessageUtils.showToast(state.errorMessage, type: MessageType.error);
           }
+
+          // if (state is UsernameTaken) {
+          //   _message = "Username taken.";
+          //   _icon = Icons.close;
+          // }
+          //
+          // if (state is UsernameAvailable) {
+          //   _message = "Username available!";
+          //   _icon = Icons.check;
+          // }
 
           if (state is AuthSuccess) {
             Navigator.pushReplacement(context, SignInPage.route());
@@ -55,18 +69,20 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  Widget _signUpForm () {
+  Widget _signUpForm() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Form(
         key: _globalKey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Sign Up.",
-              style: Theme.of(context).textTheme.displayLarge,
+            Center(
+              child: Text(
+                "Sign Up.",
+                style: Theme.of(context).textTheme.displayLarge,
+              ),
             ),
             const SizedBox(height: 24),
             TextFormField(
@@ -78,6 +94,43 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               validator: (value) => Validators.validateRequired(value, fieldName: "Full name"),
             ),
+          //  const SizedBox(height: 16),
+          //   TextFormField(
+          //     controller: _usernameController,
+          //     keyboardType: TextInputType.text,
+          //     textInputAction: TextInputAction.next,
+          //     decoration: const InputDecoration(
+          //       hintText: "Username",
+          //     ),
+          //     onChanged: (value) {
+          //       if (_debounce?.isActive ?? false) _debounce!.cancel();
+          //
+          //       _debounce = Timer(const Duration(milliseconds: 500), () {
+          //         if (value.isNotEmpty) {
+          //           context.read<AuthBloc>().add(CheckUsernameEvent(value));
+          //         }
+          //       });
+          //     },
+          //     validator: (value) => Validators.validateRequired(value, fieldName: "Username"),
+          //   ),
+          // if (_message != null)
+          //     Padding(
+          //       padding: const EdgeInsets.only(top: 4),
+          //       child: Row(
+          //         children: [
+          //           Icon(_icon, size: 16, color: Colors.grey),
+          //           const SizedBox(width: 4),
+          //           Text(
+          //             textAlign: TextAlign.start,
+          //             _message!,
+          //             style: const TextStyle(
+          //               color: Colors.grey,
+          //               fontSize: 12,
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     ),
             const SizedBox(height: 16),
             TextFormField(
               controller: _emailController,
@@ -127,9 +180,11 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   void dispose() {
+    //_debounce?.cancel();
     _fullNameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    //_usernameController.dispose();
     super.dispose();
   }
 }
