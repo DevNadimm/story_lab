@@ -28,67 +28,73 @@ class _SignInPageState extends State<SignInPage> {
     return BlocProvider(
       create: (context) => PasswordVisibilityCubit(),
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Form(
-            key: _globalKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Sign In.",
-                  style: Theme.of(context).textTheme.displayLarge,
+        body: _buildSignInContent(),
+      ),
+    );
+  }
+
+  Widget _buildSignInContent () {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Form(
+          key: _globalKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "Sign In.",
+                style: Theme.of(context).textTheme.displayLarge,
+              ),
+              const SizedBox(height: 24),
+              TextFormField(
+                controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
+                decoration: const InputDecoration(
+                  hintText: "Email",
+                  prefixIcon: Icon(HugeIcons.strokeRoundedMail01, color: AppColors.textSecondary, size: 22),
                 ),
-                const SizedBox(height: 24),
-                TextFormField(
-                  controller: _emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.next,
-                  decoration: const InputDecoration(
-                    hintText: "Email",
-                    prefixIcon: Icon(HugeIcons.strokeRoundedMail01, color: AppColors.textSecondary, size: 22),
-                  ),
-                  validator: Validators.validateEmail,
-                ),
-                const SizedBox(height: 16),
-                BlocBuilder<PasswordVisibilityCubit, bool>(
-                  builder: (context, isVisible) {
-                    return TextFormField(
-                      controller: _passwordController,
-                      keyboardType: TextInputType.visiblePassword,
-                      decoration: InputDecoration(
-                        hintText: "Password",
-                        prefixIcon: const Icon(HugeIcons.strokeRoundedSquareLockPassword, color: AppColors.textSecondary, size: 22,),
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            context.read<PasswordVisibilityCubit>().toggleVisibility();
-                          },
-                          icon: Icon(isVisible ? Icons.visibility_off : Icons.visibility, color: AppColors.textSecondary, size: 22,),
-                        ),
+                validator: Validators.validateEmail,
+              ),
+              const SizedBox(height: 16),
+              BlocBuilder<PasswordVisibilityCubit, bool>(
+                builder: (context, isVisible) {
+                  return TextFormField(
+                    controller: _passwordController,
+                    keyboardType: TextInputType.visiblePassword,
+                    decoration: InputDecoration(
+                      hintText: "Password",
+                      prefixIcon: const Icon(HugeIcons.strokeRoundedSquareLockPassword, color: AppColors.textSecondary, size: 22,),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          context.read<PasswordVisibilityCubit>().toggleVisibility();
+                        },
+                        icon: Icon(isVisible ? Icons.visibility_off : Icons.visibility, color: AppColors.textSecondary, size: 22,),
                       ),
-                      obscureText: !isVisible,
-                      obscuringCharacter: '*',
-                      validator: Validators.validatePassword,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                    );
-                  },
-                ),
-                const SizedBox(height: 24),
-                CustomElevatedButton(
-                  onPressed: _submitButton,
-                  label: "Sign In",
-                ),
-                const SizedBox(height: 16),
-                AuthFooterText(
-                  leadingText: 'Don\'t have an account? ',
-                  actionText: 'Sign Up',
-                  onTap: () {
-                    Navigator.pushReplacement(context, SignUpPage.route());
-                  },
-                )
-              ],
-            ),
+                    ),
+                    obscureText: !isVisible,
+                    obscuringCharacter: '*',
+                    validator: Validators.validatePassword,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                  );
+                },
+              ),
+              const SizedBox(height: 24),
+              CustomElevatedButton(
+                onPressed: _submitButton,
+                label: "Sign In",
+              ),
+              const SizedBox(height: 16),
+              AuthFooterText(
+                leadingText: 'Don\'t have an account? ',
+                actionText: 'Sign Up',
+                onTap: () {
+                  Navigator.pushReplacement(context, SignUpPage.route());
+                },
+              )
+            ],
           ),
         ),
       ),
