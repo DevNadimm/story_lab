@@ -6,6 +6,7 @@ import 'package:story_lab/core/utils/validators.dart';
 import 'package:story_lab/core/widgets/custom_elevated_button.dart';
 import 'package:story_lab/core/widgets/loading_indicator.dart';
 import 'package:story_lab/features/auth/presentation/blocs/auth_bloc.dart';
+import 'package:story_lab/features/auth/presentation/pages/email_verification_page.dart';
 import 'package:story_lab/features/auth/presentation/pages/sign_in_page.dart';
 import 'package:story_lab/features/auth/presentation/widgets/auth_footer_text.dart';
 
@@ -48,7 +49,7 @@ class _SignUpPageState extends State<SignUpPage> {
           // }
 
           if (state is AuthSuccess) {
-            Navigator.pushReplacement(context, SignInPage.route());
+            Navigator.pushReplacement(context, EmailVerificationPage.route(email: _emailController.text.trim()));
           }
         },
         builder: (BuildContext context, AuthState state) {

@@ -17,7 +17,7 @@ class AppColors {
   static const Color border = Color(0xFF2C2C2C);
   static const Color divider = Color(0xFF373737);
 
-  static const Color accent = Color(0xFF03DAC6);
+  static const Color accent = Color(0xFF00B8A6);
 
   static const Color error = Colors.redAccent;
   static const Color errorBackground = Color(0xFFB00020);
