@@ -23,9 +23,21 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   Future<String> signInWithEmailAndPassword({
     required String email,
     required String password,
-  }) {
-    // TODO: implement signInWithEmailAndPassword
-    throw UnimplementedError();
+  }) async {
+    try {
+      final response = await supabaseClient.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
+
+      if (response.user == null) {
+        throw ServerException('Login failed. Please check your credentials.');
+      }
+
+      return response.user!.id;
+    } catch (e) {
+      throw ServerException('Unexpected error: ${e.toString()}');
+    }
   }
 
   @override
@@ -35,16 +47,23 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
     required String password,
   }) async {
     try {
+      final defaultUsername = email.split('@').first;
+
       final response = await supabaseClient.auth.signUp(
         email: email,
         password: password,
         data: {
           'fullName': fullName,
+          'username': defaultUsername,
+          // 'phone': '01812345678',
+          // 'avatarUrl': 'https://shorturl.at/x54PH',
+          // 'dateOfBirth': '2004-5-17',
+          // 'interestedIn': ['Tech', 'Art'].join(','),
         },
       );
 
       if (response.user == null) {
-        throw ServerException('User is null!');
+        throw ServerException('Sign up failed. Please try again.');
       }
 
       return response.user!.id;
