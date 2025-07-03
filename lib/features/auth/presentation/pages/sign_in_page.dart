@@ -10,9 +10,13 @@ import 'package:story_lab/features/auth/presentation/state_management/cubits/pas
 import 'package:story_lab/features/auth/presentation/widgets/auth_footer_text.dart';
 
 class SignInPage extends StatefulWidget {
-  static route() => CupertinoPageRoute(builder: (_) => const SignInPage());
+  final String? email;
 
-  const SignInPage({super.key});
+  const SignInPage({super.key, this.email});
+
+  static route({String? email}) {
+    return CupertinoPageRoute(builder: (_) => SignInPage(email: email));
+  }
 
   @override
   State<SignInPage> createState() => _SignInPageState();
@@ -22,6 +26,12 @@ class _SignInPageState extends State<SignInPage> {
   final _globalKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    _emailController.text = widget.email ?? '';
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

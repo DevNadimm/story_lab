@@ -8,7 +8,6 @@ import 'package:story_lab/core/utils/validators.dart';
 import 'package:story_lab/core/widgets/custom_elevated_button.dart';
 import 'package:story_lab/core/widgets/loading_indicator.dart';
 import 'package:story_lab/features/auth/presentation/state_management/blocs/auth_bloc.dart';
-import 'package:story_lab/features/auth/presentation/pages/email_verification_page.dart';
 import 'package:story_lab/features/auth/presentation/pages/sign_in_page.dart';
 import 'package:story_lab/features/auth/presentation/state_management/cubits/password_visibility_cubit.dart';
 import 'package:story_lab/features/auth/presentation/widgets/auth_footer_text.dart';
@@ -38,7 +37,7 @@ class _SignUpPageState extends State<SignUpPage> {
       body: BlocProvider(
         create: (_) => PasswordVisibilityCubit(),
         child: BlocConsumer<AuthBloc, AuthState>(
-          listener: (context, state) {
+          listener: (context, state) async {
             if (state is AuthFailure) {
               MessageUtils.showToast(state.errorMessage, type: MessageType.error);
             }
@@ -54,7 +53,10 @@ class _SignUpPageState extends State<SignUpPage> {
             // }
 
             if (state is AuthSuccess) {
-              Navigator.pushReplacement(context, EmailVerificationPage.route(email: _emailController.text.trim()));
+              final email = _emailController.text.trim();
+              MessageUtils.showSnackBar(context, "📬 Email sent to $email. Please verify.", type: MessageType.success);
+              await Future.delayed(const Duration(seconds: 2));
+              Navigator.pushReplacement(context, SignInPage.route(email: email));
             }
           },
           builder: (BuildContext context, AuthState state) {

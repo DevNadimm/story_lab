@@ -15,9 +15,7 @@ class EmailVerificationPage extends StatelessWidget {
   const EmailVerificationPage({super.key, required this.email});
 
   static Route route({required String email}) {
-    return CupertinoPageRoute(
-      builder: (_) => EmailVerificationPage(email: email),
-    );
+    return CupertinoPageRoute(builder: (_) => EmailVerificationPage(email: email));
   }
 
   @override
