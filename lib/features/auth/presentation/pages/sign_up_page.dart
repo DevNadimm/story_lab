@@ -30,7 +30,7 @@ class _SignUpPageState extends State<SignUpPage> {
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthFailure) {
-            MessageUtils.showSnackBar(context, state.errorMessage);
+            MessageUtils.showToast(state.errorMessage, type: MessageType.error);
           }
 
           if (state is AuthSuccess) {
