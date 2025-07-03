@@ -67,7 +67,7 @@ class _SignInPageState extends State<SignInPage> {
                           icon: Icon(isVisible ? Icons.visibility_off : Icons.visibility, color: AppColors.textSecondary, size: 22,),
                         ),
                       ),
-                      obscureText: !isVisible, // FIXED
+                      obscureText: !isVisible,
                       obscuringCharacter: '*',
                       validator: Validators.validatePassword,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
