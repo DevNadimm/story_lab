@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:story_lab/core/secrets/app_secrets.dart';
 import 'package:story_lab/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:story_lab/features/auth/data/repository/auth_repository_impl.dart';
+import 'package:story_lab/features/auth/domain/usecases/check_username_available.dart';
 import 'package:story_lab/features/auth/domain/usecases/user_sign_up.dart';
 import 'package:story_lab/features/auth/presentation/blocs/auth_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -21,6 +22,11 @@ void main() async {
         BlocProvider(
           create: (_) => AuthBloc(
             userSignUp: UserSignUp(
+              AuthRepositoryImpl(
+                AuthRemoteDatasourceImpl(supabase.client),
+              ),
+            ),
+            checkUsernameAvailable: CheckUsernameAvailable(
               AuthRepositoryImpl(
                 AuthRemoteDatasourceImpl(supabase.client),
               ),

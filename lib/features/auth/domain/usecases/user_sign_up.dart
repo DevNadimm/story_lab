@@ -3,7 +3,7 @@ import 'package:story_lab/core/error/failures.dart';
 import 'package:story_lab/core/usecase/usecase.dart';
 import 'package:story_lab/features/auth/domain/repository/auth_repository.dart';
 
-class UserSignUp implements Usecase<String, UserSignUpParams> {
+class UserSignUp implements UseCase<String, UserSignUpParams> {
   final AuthRepository authRepository;
 
   UserSignUp(this.authRepository);

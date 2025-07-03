@@ -18,3 +18,7 @@ final class AuthFailure extends AuthState {
 
   AuthFailure({required this.errorMessage});
 }
+
+class UsernameAvailable extends AuthState {}
+
+class UsernameTaken extends AuthState {}

@@ -40,4 +40,16 @@ class AuthRepositoryImpl implements AuthRepository {
       return left(Failure(message: message));
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> isUsernameTaken({required String username}) async {
+    try {
+      final isTaken = await authRemoteDatasource.isUsernameTaken(username: username);
+      return right(isTaken);
+    } on ServerException catch (e) {
+      final message = extractErrorMessage(e.message);
+      debugPrint("[❌ ERROR] $message");
+      return left(Failure(message: message));
+    }
+  }
 }

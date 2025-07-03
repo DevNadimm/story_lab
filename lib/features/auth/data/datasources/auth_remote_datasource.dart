@@ -12,6 +12,10 @@ abstract interface class AuthRemoteDatasource {
     required String email,
     required String password,
   });
+
+  Future<bool> isUsernameTaken({
+    required String username,
+  });
 }
 
 class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
@@ -67,6 +71,21 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
       }
 
       return response.user!.id;
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<bool> isUsernameTaken({required String username}) async {
+    try {
+      final response = await supabaseClient
+          .from('usernames')
+          .select('username')
+          .eq('username', username)
+          .maybeSingle();
+
+      return response != null;
     } catch (e) {
       throw ServerException(e.toString());
     }

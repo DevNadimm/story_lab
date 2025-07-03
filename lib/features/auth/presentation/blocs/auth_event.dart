@@ -24,3 +24,9 @@ final class AuthSignIn extends AuthEvent {
     required this.password,
   });
 }
+
+class CheckUsernameEvent extends AuthEvent {
+  final String username;
+
+  CheckUsernameEvent(this.username);
+}
