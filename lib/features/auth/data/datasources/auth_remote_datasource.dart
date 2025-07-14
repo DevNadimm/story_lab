@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:story_lab/core/error/exceptions.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -16,8 +17,6 @@ abstract interface class AuthRemoteDatasource {
   Future<bool> isUsernameTaken({
     required String username,
   });
-
-  Future<bool> isEmailVerified();
 
   Future<void> resendEmailVerification({
     required String email,
@@ -41,12 +40,14 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
       );
 
       if (response.user == null) {
+        debugPrint('[❌ ERROR] Login failed. Please check your credentials.');
         throw ServerException('Login failed. Please check your credentials.');
       }
 
       return response.user!.id;
     } catch (e) {
-      throw ServerException('Unexpected error: ${e.toString()}');
+      debugPrint('[❌ ERROR] ${e.toString()}');
+      throw ServerException('Unable to sign in. Please try again later.');
     }
   }
 
@@ -65,20 +66,23 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
         data: {
           'fullName': fullName,
           'username': defaultUsername,
+          // Optional fields can be added here
           // 'phone': '01812345678',
-          // 'avatarUrl': 'https://shorturl.at/x54PH',
-          // 'dateOfBirth': '2004-5-17',
-          // 'interestedIn': ['Tech', 'Art'].join(','),
+          // 'avatarUrl': '',
+          // 'dateOfBirth': '2004-05-17',
+          // 'interestedIn': ['Tech', 'Art'],
         },
       );
 
       if (response.user == null) {
+        debugPrint('[❌ ERROR] Sign up failed. Please try again.');
         throw ServerException('Sign up failed. Please try again.');
       }
 
       return response.user!.id;
     } catch (e) {
-      throw ServerException(e.toString());
+      debugPrint('[❌ ERROR] ${e.toString()}');
+      throw ServerException('Unable to sign up. Please try again later.');
     }
   }
 
@@ -93,22 +97,8 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
 
       return response != null;
     } catch (e) {
-      throw ServerException(e.toString());
-    }
-  }
-
-  @override
-  Future<bool> isEmailVerified() async {
-    try {
-      final user = supabaseClient.auth.currentUser;
-      if (user == null) {
-        throw ServerException('No authenticated session. Please sign in again.');
-      }
-
-      final response = await supabaseClient.auth.getUser();
-      return response.user?.emailConfirmedAt != null;
-    } catch (e) {
-      throw ServerException(e.toString());
+      debugPrint('[❌ ERROR] ${e.toString()}');
+      throw ServerException('Unable to check username availability at the moment.');
     }
   }
 
@@ -120,7 +110,8 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
         email: email,
       );
     } catch (e) {
-      throw ServerException(e.toString());
+      debugPrint('[❌ ERROR] ${e.toString()}');
+      throw ServerException('Failed to resend email verification. Please try again.');
     }
   }
 }

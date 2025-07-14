@@ -31,8 +31,6 @@ class CheckUsernameEvent extends AuthEvent {
   CheckUsernameEvent(this.username);
 }
 
-class CheckEmailVerificationStatus extends AuthEvent {}
-
 class ResendEmailVerificationRequested extends AuthEvent {
   final String email;
 

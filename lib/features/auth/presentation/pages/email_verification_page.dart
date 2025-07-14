@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:story_lab/core/themes/app_colors.dart';
 import 'package:story_lab/core/utils/show_message.dart';
 import 'package:story_lab/core/widgets/custom_elevated_button.dart';
-import 'package:story_lab/core/widgets/loading_indicator.dart';
 import 'package:story_lab/features/auth/presentation/pages/sign_in_page.dart';
 import 'package:story_lab/features/auth/presentation/state_management/blocs/auth_bloc.dart';
 
@@ -23,17 +22,6 @@ class EmailVerificationPage extends StatelessWidget {
     return Scaffold(
       body: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
-            if (state is EmailVerified) {
-              Navigator.pushReplacement(context, SignInPage.route());
-            }
-
-            if (state is EmailNotVerified) {
-              MessageUtils.showToast(
-                'Your email is not verified yet. Please check your inbox.',
-                type: MessageType.error,
-              );
-            }
-
             if (state is AuthFailure) {
               MessageUtils.showToast(
                 state.errorMessage,
@@ -49,18 +37,7 @@ class EmailVerificationPage extends StatelessWidget {
             }
           },
           builder: (BuildContext context, state) {
-          final isLoading = state is EmailVerificationChecking;
-
-          return Stack(
-            children: [
-              _buildContent(context),
-              if (isLoading)
-                Container(
-                  color: AppColors.black.withOpacity(0.7),
-                  child: const LoadingIndicator(),
-                ),
-            ],
-          );
+          return _buildContent(context);
         },
       ),
     );
@@ -98,7 +75,7 @@ class EmailVerificationPage extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           CustomElevatedButton(
-            onPressed: () => context.read<AuthBloc>().add(CheckEmailVerificationStatus()),
+            onPressed: () => Navigator.push(context, SignInPage.route(email: email)),
             label: "Yes, I verified",
           ),
           const SizedBox(height: 12),

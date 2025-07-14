@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:story_lab/core/error/exceptions.dart';
 import 'package:story_lab/core/error/failures.dart';
-import 'package:story_lab/core/utils/error_parser.dart';
 import 'package:story_lab/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:story_lab/features/auth/domain/repository/auth_repository.dart';
 
@@ -15,9 +13,17 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, String>> signInWithEmailAndPassword({
     required String email,
     required String password,
-  }) {
-    // TODO: implement signInWithEmailAndPassword
-    throw UnimplementedError();
+  }) async {
+    try {
+      final uid = await authRemoteDatasource.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      return right(uid);
+    } on ServerException catch (e) {
+      return left(Failure(message: e.message));
+    }
   }
 
   @override
@@ -35,9 +41,7 @@ class AuthRepositoryImpl implements AuthRepository {
       
       return right(uid);
     } on ServerException catch (e) {
-      final message = extractErrorMessage(e.message);
-      debugPrint("[❌ ERROR] $message");
-      return left(Failure(message: message));
+      return left(Failure(message: e.message));
     }
   }
 
@@ -47,21 +51,7 @@ class AuthRepositoryImpl implements AuthRepository {
       final isTaken = await authRemoteDatasource.isUsernameTaken(username: username);
       return right(isTaken);
     } on ServerException catch (e) {
-      final message = extractErrorMessage(e.message);
-      debugPrint("[❌ ERROR] $message");
-      return left(Failure(message: message));
-    }
-  }
-
-  @override
-  Future<Either<Failure, bool>> isEmailVerified() async {
-    try {
-      final isVerified = await authRemoteDatasource.isEmailVerified();
-      return right(isVerified);
-    } on ServerException catch (e) {
-      final message = extractErrorMessage(e.message);
-      debugPrint("[❌ ERROR] $e");
-      return left(Failure(message: message));
+      return left(Failure(message: e.message));
     }
   }
 
@@ -71,9 +61,7 @@ class AuthRepositoryImpl implements AuthRepository {
       await authRemoteDatasource.resendEmailVerification(email: email);
       return right(null);
     } on ServerException catch (e) {
-      final message = extractErrorMessage(e.message);
-      debugPrint("[❌ ERROR] $e");
-      return left(Failure(message: message));
+      return left(Failure(message: e.message));
     }
   }
 }

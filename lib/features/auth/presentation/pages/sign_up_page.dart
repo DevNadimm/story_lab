@@ -7,6 +7,7 @@ import 'package:story_lab/core/utils/show_message.dart';
 import 'package:story_lab/core/utils/validators.dart';
 import 'package:story_lab/core/widgets/custom_elevated_button.dart';
 import 'package:story_lab/core/widgets/loading_indicator.dart';
+import 'package:story_lab/features/auth/presentation/pages/email_verification_page.dart';
 import 'package:story_lab/features/auth/presentation/state_management/blocs/auth_bloc.dart';
 import 'package:story_lab/features/auth/presentation/pages/sign_in_page.dart';
 import 'package:story_lab/features/auth/presentation/state_management/cubits/password_visibility_cubit.dart';
@@ -54,8 +55,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
             if (state is AuthSuccess) {
               final email = _emailController.text.trim();
-              Navigator.pushReplacement(context, SignInPage.route(email: email));
-              await Future.delayed(const Duration(seconds: 2));
+              Navigator.pushReplacement(context, EmailVerificationPage.route(email: email));
               MessageUtils.showSnackBar(context, "📬 Email sent to $email. Please verify.", type: MessageType.info);
             }
           },

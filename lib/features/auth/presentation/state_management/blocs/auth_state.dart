@@ -25,8 +25,4 @@ class UsernameTaken extends AuthState {}
 
 class EmailVerificationChecking extends AuthState {}
 
-class EmailVerified extends AuthState {}
-
-class EmailNotVerified extends AuthState {}
-
 class EmailVerificationResent extends AuthState {}

@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:story_lab/core/secrets/app_secrets.dart';
 import 'package:story_lab/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:story_lab/features/auth/data/repository/auth_repository_impl.dart';
-import 'package:story_lab/features/auth/domain/usecases/check_email_verified.dart';
 import 'package:story_lab/features/auth/domain/usecases/check_username_available.dart';
 import 'package:story_lab/features/auth/domain/usecases/resend_email_verification.dart';
+import 'package:story_lab/features/auth/domain/usecases/user_sign_in.dart';
 import 'package:story_lab/features/auth/domain/usecases/user_sign_up.dart';
 import 'package:story_lab/features/auth/presentation/state_management/blocs/auth_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -28,12 +28,12 @@ void main() async {
                 AuthRemoteDatasourceImpl(supabase.client),
               ),
             ),
-            checkUsernameAvailable: CheckUsernameAvailable(
+            userSignIn: UserSignIn(
               AuthRepositoryImpl(
                 AuthRemoteDatasourceImpl(supabase.client),
               ),
             ),
-            checkEmailVerified: CheckEmailVerified(
+            checkUsernameAvailable: CheckUsernameAvailable(
               AuthRepositoryImpl(
                 AuthRemoteDatasourceImpl(supabase.client),
               ),

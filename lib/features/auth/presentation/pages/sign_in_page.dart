@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:story_lab/core/themes/app_colors.dart';
+import 'package:story_lab/core/utils/show_message.dart';
 import 'package:story_lab/core/utils/validators.dart';
 import 'package:story_lab/core/widgets/custom_elevated_button.dart';
+import 'package:story_lab/core/widgets/loading_indicator.dart';
+import 'package:story_lab/features/auth/presentation/pages/email_verification_page.dart';
 import 'package:story_lab/features/auth/presentation/pages/sign_up_page.dart';
+import 'package:story_lab/features/auth/presentation/state_management/blocs/auth_bloc.dart';
 import 'package:story_lab/features/auth/presentation/state_management/cubits/password_visibility_cubit.dart';
 import 'package:story_lab/features/auth/presentation/widgets/auth_footer_text.dart';
 
@@ -37,8 +41,34 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => PasswordVisibilityCubit(),
-      child: Scaffold(
-        body: _buildSignInContent(),
+      child: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthFailure) {
+            MessageUtils.showToast(state.errorMessage, type: MessageType.error);
+          }
+
+          if (state is AuthSuccess) {
+            final email = _emailController.text.trim();
+            Navigator.pushReplacement(context, EmailVerificationPage.route(email: email));
+            // MessageUtils.showSnackBar(context, "📬 Email sent to $email. Please verify.", type: MessageType.info);
+          }
+        },
+        builder: (context, state) {
+          final isLoading = state is AuthLoading;
+
+          return Scaffold(
+            body: Stack(
+              children: [
+                _buildSignInContent(),
+                if (isLoading)
+                  Container(
+                    color: AppColors.black.withOpacity(0.7),
+                    child: const LoadingIndicator(),
+                  ),
+              ],
+            )
+          );
+        },
       ),
     );
   }
@@ -110,7 +140,9 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   _submitButton() {
-    if (_globalKey.currentState?.validate() ?? false) {}
+    if (_globalKey.currentState?.validate() ?? false) {
+      context.read<AuthBloc>().add(AuthSignIn(email: _emailController.text.trim(), password: _passwordController.text.trim()));
+    }
   }
 
   @override

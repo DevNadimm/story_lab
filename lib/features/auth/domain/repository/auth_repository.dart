@@ -17,8 +17,6 @@ abstract interface class AuthRepository {
     required String username,
   });
 
-  Future<Either<Failure, bool>> isEmailVerified();
-
   Future<Either<Failure, void>> resendEmailVerification({
     required String email,
   });
