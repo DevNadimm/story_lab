@@ -26,6 +26,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final _globalKey = GlobalKey<FormState>();
   final _fullNameController = TextEditingController();
   final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   // final _usernameController = TextEditingController();
   // String? _message;
@@ -154,6 +155,16 @@ class _SignUpPageState extends State<SignUpPage> {
               validator: Validators.validateEmail,
             ),
             const SizedBox(height: 16),
+            TextFormField(
+              controller: _phoneController,
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.next,
+              decoration: const InputDecoration(
+                hintText: "Phone",
+                prefixIcon: Icon(HugeIcons.strokeRoundedCall02, color: AppColors.textSecondary, size: 22),
+              ),
+            ),
+            const SizedBox(height: 16),
             BlocBuilder<PasswordVisibilityCubit, bool>(
               builder: (context, isVisible) {
                 return TextFormField(
@@ -195,7 +206,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   _submitButton() {
     if (_globalKey.currentState?.validate() ?? false) {
-      context.read<AuthBloc>().add(AuthSignUp(fullName: _fullNameController.text.trim(), email: _emailController.text.trim(), password: _passwordController.text.trim()));
+      context.read<AuthBloc>().add(AuthSignUp(fullName: _fullNameController.text.trim(), email: _emailController.text.trim(), phone: _phoneController.text.trim(), password: _passwordController.text.trim()));
     }
   }
 

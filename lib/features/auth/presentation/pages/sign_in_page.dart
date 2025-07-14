@@ -50,7 +50,6 @@ class _SignInPageState extends State<SignInPage> {
           if (state is AuthSuccess) {
             final email = _emailController.text.trim();
             Navigator.pushReplacement(context, EmailVerificationPage.route(email: email));
-            // MessageUtils.showSnackBar(context, "📬 Email sent to $email. Please verify.", type: MessageType.info);
           }
         },
         builder: (context, state) {

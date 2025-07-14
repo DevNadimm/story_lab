@@ -30,12 +30,14 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, String>> signUpWithEmailAndPassword({
     required String fullName,
     required String email,
+    required String phone,
     required String password,
   }) async {
     try {
       final uid = await authRemoteDatasource.signUpWithEmailAndPassword(
         fullName: fullName,
         email: email,
+        phone: phone,
         password: password,
       );
       

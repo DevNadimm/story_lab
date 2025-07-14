@@ -32,6 +32,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           UserSignUpParams(
             fullName: event.fullName,
             email: event.email,
+            phone: event.phone,
             password: event.password,
           ),
         );

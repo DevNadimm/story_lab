@@ -13,6 +13,7 @@ class UserSignUp implements UseCase<String, UserSignUpParams> {
     return await authRepository.signUpWithEmailAndPassword(
       fullName: params.fullName,
       email: params.email,
+      phone: params.phone,
       password: params.password,
     );
   }
@@ -21,11 +22,13 @@ class UserSignUp implements UseCase<String, UserSignUpParams> {
 class UserSignUpParams {
   final String fullName;
   final String email;
+  final String phone;
   final String password;
 
   UserSignUpParams({
     required this.fullName,
     required this.email,
+    required this.phone,
     required this.password,
   });
 }

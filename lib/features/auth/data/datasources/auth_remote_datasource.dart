@@ -6,6 +6,7 @@ abstract interface class AuthRemoteDatasource {
   Future<String> signUpWithEmailAndPassword({
     required String fullName,
     required String email,
+    required String phone,
     required String password,
   });
 
@@ -55,6 +56,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   Future<String> signUpWithEmailAndPassword({
     required String fullName,
     required String email,
+    required String phone,
     required String password,
   }) async {
     try {
@@ -66,11 +68,8 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
         data: {
           'fullName': fullName,
           'username': defaultUsername,
-          // Optional fields can be added here
-          // 'phone': '01812345678',
+          'phone': phone,
           // 'avatarUrl': '',
-          // 'dateOfBirth': '2004-05-17',
-          // 'interestedIn': ['Tech', 'Art'],
         },
       );
 
